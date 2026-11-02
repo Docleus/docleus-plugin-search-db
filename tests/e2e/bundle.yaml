@@ -1,0 +1,8 @@
+- id: editor
+  plugin: ../../../docleus-plugin-editor
+- id: commonmark
+  plugin: ../../../docleus-plugin-blocks-commonmark
+- id: theme-default
+  plugin: ../../../docleus-plugin-theme-default
+- id: search-db
+  plugin: ../..

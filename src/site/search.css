@@ -1,0 +1,125 @@
+.ds-search {
+  position: relative;
+}
+
+.ds-search[hidden] {
+  display: none;
+}
+
+.ds-search-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.ds-search-input {
+  width: 300px;
+  max-width: 50vw;
+  height: 30px;
+  padding: 0 10px;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid var(--dt-border-strong, #cfcfcc);
+  border-radius: 3px;
+  transition: border-color 120ms ease-out;
+}
+
+.ds-search-input:hover {
+  border-color: var(--dt-muted, #555553);
+}
+
+.ds-search-input:focus {
+  border-color: var(--dt-fg, #111);
+  outline: none;
+  box-shadow: inset 0 0 0 0.5px var(--dt-fg, #111);
+}
+
+.ds-search-results {
+  position: absolute;
+  right: 0;
+  z-index: 20;
+  width: min(480px, 90vw);
+  max-height: 70vh;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding: 4px;
+  background: var(--dt-bg, #fff);
+  border: 1px solid var(--dt-fg, #111);
+  border-radius: 3px;
+  box-shadow:
+    0 1px 0 var(--dt-fg, #111),
+    0 14px 36px -14px rgb(0 0 0 / 22%);
+  transform-origin: 100% 0;
+  animation: ds-unfold 240ms cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+@keyframes ds-unfold {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(-20px -20px -40px -20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-search-results {
+    animation: none;
+  }
+}
+
+.ds-search-results[hidden] {
+  display: none;
+}
+
+.ds-search-results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ds-search-results a {
+  display: block;
+  padding: 8px 8px 9px;
+  border-radius: 2px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.ds-search-results a:hover,
+.ds-search-results a:focus-visible {
+  background: var(--dt-sel, rgb(17 17 17 / 6%));
+}
+
+.ds-search-title {
+  display: block;
+  font-weight: 600;
+  color: var(--dt-fg, #111);
+}
+
+.ds-search-snippet {
+  display: block;
+  margin-top: 2px;
+  color: var(--dt-muted, #555553);
+}
+
+.ds-search-message {
+  margin: 0;
+  padding: 8px 8px 12px;
+  color: var(--dt-muted, #555553);
+}
+
+.ds-search-snippet mark {
+  background: none;
+  color: var(--dt-fg, #111);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}

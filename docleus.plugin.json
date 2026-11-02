@@ -1,0 +1,14 @@
+{
+  "name": "@docleus/plugin-search-db",
+  "version": "0.0.1",
+  "engines": {
+    "docleus": "^0.0.1"
+  },
+  "provides": ["search"],
+  "entries": {
+    "shared": "./dist/shared/index.js",
+    "server": "./dist/server/index.js",
+    "editor": "./dist/editor/index.js",
+    "site": "./dist/site/index.js"
+  }
+}
