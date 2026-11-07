@@ -1,8 +1,8 @@
 {
   "name": "@docleus/plugin-search-db",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
-    "docleus": "^0.0.1"
+    "docleus": ">=0.0.1 <0.0.3"
   },
   "provides": ["search"],
   "entries": {
