@@ -1,6 +1,6 @@
 {
   "name": "@docleus/plugin-search-db",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": true,
   "type": "module",
   "description": "Full-text search in the instance database: SQLite FTS5 or Postgres tsvector.",
@@ -33,7 +33,7 @@
     "e2e": "playwright test"
   },
   "peerDependencies": {
-    "@docleus/sdk": ">=0.0.1 <0.0.6",
+    "@docleus/sdk": ">=0.0.1 <0.0.7",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
