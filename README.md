@@ -144,3 +144,5 @@ before 1.0.
 
 Version `0.0.9` supports Docleus core and SDK `0.0.1`, `0.0.2`, `0.0.3`, `0.0.4`, `0.0.5`, `0.0.6`, `0.0.7`, `0.0.8` and `0.0.9` through
 the matching `>=0.0.1 <0.0.10` manifest and SDK peer ranges.
+
+On core 0.0.10 and later, projection index writes and cursor updates share one storage transaction. Failed indexing retains the previous index and can replay the same log entry after recovery; nested store transactions join through savepoints. External search providers must deduplicate external effects by log sequence.

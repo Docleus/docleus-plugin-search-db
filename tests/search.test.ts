@@ -308,6 +308,51 @@ async function dumpIndex(fixture: Fixture): Promise<unknown[]> {
 }
 
 describe("rebuilding the index", () => {
+  it("rolls a failed index update back before retrying the same log entry", async () => {
+    const fixture = await boot();
+    await fixture.commit(fixture.spaceId, {
+      put: {
+        old: page("Old", 0, "original"),
+        existing: page("New", 1, "existing"),
+        obsolete: page("Retained", 2, "removed only after success"),
+      },
+    });
+    const { ctx } = fixture.instance;
+    await ctx.content.catchUp(MAIN_PROJECTION);
+    await run(
+      ctx.storage.db,
+      ctx.storage.dialect,
+      "create unique index fail_projection on search_documents (title) where collection = 'main'",
+    );
+    await fixture.commit(fixture.spaceId, {
+      put: { old: page("New", 0, "replacement") },
+      remove: ["obsolete"],
+    });
+    await expect(ctx.content.catchUp(MAIN_PROJECTION)).rejects.toThrow();
+    const rows = await run(
+      ctx.storage.db,
+      ctx.storage.dialect,
+      "select title from search_documents where collection = 'main' order by title",
+    );
+    expect(rows).toEqual([
+      { title: "New" },
+      { title: "Old" },
+      { title: "Retained" },
+    ]);
+    await run(
+      ctx.storage.db,
+      ctx.storage.dialect,
+      "drop index fail_projection",
+    );
+    await ctx.content.catchUp(MAIN_PROJECTION);
+    const recovered = await run(
+      ctx.storage.db,
+      ctx.storage.dialect,
+      "select title from search_documents where collection = 'main' order by title",
+    );
+    expect(recovered).toEqual([{ title: "New" }, { title: "New" }]);
+  });
+
   it("gives the same index as the incremental updates", async () => {
     const fixture = await boot();
     const { ctx } = fixture.instance;
